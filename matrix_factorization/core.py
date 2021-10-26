@@ -1,6 +1,7 @@
 import numpy as np
 from tqdm.auto import tqdm
 import matplotlib.pyplot as plt
+from matrix_factorization import fast
 
 
 class MatrixFactorization:
@@ -13,11 +14,10 @@ class MatrixFactorization:
       beta: regularization parameter
       iterations: number of SGD iterations to perform
     """
-    def __init__(self, K=100, alpha=0.1, beta=0.01, _lambda=0.3, iterations=100):
+    def __init__(self, K=100, alpha=0.1, beta=0.01, iterations=100):
         self.K = K
         self.alpha = alpha
         self.beta = beta
-        self._lambda = _lambda
         self.iterations = iterations
         self.P = None
         self.Q = None
@@ -40,43 +40,19 @@ class MatrixFactorization:
         self.bi = np.zeros(num_items)
         self.b = x.sum() / len(x.nonzero()[0])
 
-        _x = x.todok()  # to python dict
+        _x = np.array([(i, j, v) for (i, j), v in x.todok().items()])  # to python dict
 
         errors = []
 
         with tqdm(range(self.iterations)) as _it:
             for _ in _it:
-                self.sgd(_x)
-                error = self.frobenius(_x)
+                fast.sgd(_x, self.P, self.Q, self.bu, self.bi, self.b, self.alpha, self.beta)
+                error = fast.frob(_x, self.P, self.Q, self.bu, self.bi, self.b)
                 errors.append(error)
                 _it.set_postfix(error=error)
 
         plt.plot(errors)
         plt.show()
 
-    def sgd(self, x):
-        for (i, j), v in x.items():
-            eij = v - self.predict_rating(i, j)
-            # Retrieve pre-update values
-            Pi = self.P[i, :].copy()
-            Qj = self.Q[:, j].copy()
-            # Update latent features
-            self.P[i, :] += self.alpha * (eij * Qj - self.beta * Pi)
-            self.Q[:, j] += self.alpha * (eij * Pi - self.beta * Qj)
-            # Update biases
-            self.bu[i] += self.alpha * (eij - self.beta * self.bu[i])
-            self.bi[j] += self.alpha * (eij - self.beta * self.bi[j])
-
-    def frobenius(self, x):
-        error = 0
-        for (i, j), v in x.items():
-            abs_error = v - self.predict_rating(i, j)
-            error += abs_error ** 2
-        return np.sqrt(error)
-
-    def predict_rating(self, i, j):
-        return self.b + self.bu[i] + self.bi[j] + np.dot(self.P[i, :], self.Q[:, j])
-
     def predict(self, x):
-        _x = x.todok()  # to python dict
         pass

@@ -1,5 +1,5 @@
 from scipy.sparse import load_npz
-from matrix_factorization import MatrixFactorization
+from matrix_factorization.core import MatrixFactorization
 
 if __name__ == '__main__':
     x = load_npz("train_x.npz")
