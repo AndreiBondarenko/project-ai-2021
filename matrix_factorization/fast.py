@@ -18,10 +18,11 @@ def sgd(x, P, Q, bu, bi, b, alpha, beta):
         bi[j] += alpha * (eij - beta * bi[j])
 
 
-@jit(nopython=True)
+@jit(nopython=True, parallel=True)
 def frob(x, P, Q, bu, bi, b):
     error = 0
-    for i, j, v in x:
+    for idx in prange(len(x)):
+        i, j, v = x[idx]
         abs_error = v - predict_rating(i, j, P, Q, bu, bi, b)
         error += abs_error ** 2
     return np.sqrt(error)
