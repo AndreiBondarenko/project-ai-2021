@@ -8,11 +8,11 @@ def sgd(x, P, Q, bu, bi, b, alpha, beta):
         i, j, v = x[idx]
         eij = v - predict_rating(i, j, P, Q, bu, bi, b)
         # Retrieve pre-update values
-        Pi = P[i, :].copy()
-        Qj = Q[:, j].copy()
+        Pi = P[i].copy()
+        Qj = Q[j].copy()
         # Update latent features
-        P[i, :] += alpha * (eij * Qj - beta * Pi)
-        Q[:, j] += alpha * (eij * Pi - beta * Qj)
+        P[i] += alpha * (eij * Qj - beta * Pi)
+        Q[j] += alpha * (eij * Pi - beta * Qj)
         # Update biases
         bu[i] += alpha * (eij - beta * bu[i])
         bi[j] += alpha * (eij - beta * bi[j])
@@ -30,5 +30,5 @@ def frob(x, P, Q, bu, bi, b):
 
 @jit(nopython=True)
 def predict_rating(i, j, P, Q, bu, bi, b):
-    return b + bu[i] + bi[j] + np.dot(P[i, :], Q[:, j])
+    return b + bu[i] + bi[j] + np.dot(P[i], Q[j])
 
