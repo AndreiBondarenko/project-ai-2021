@@ -60,7 +60,8 @@ class MatrixFactorization:
         scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b)
         # sort items in descending order by their score
         ind = np.argsort(scores)[::-1]
-        # remove already recommended items, i.e. items from training set
-        ind = ind[np.where(ind not in self.old_recs[user])]
+        # remove consumed items, i.e. items from training set
+        consumed = np.array(self.old_recs[user])
+        ind = np.setdiff1d(ind, consumed)
         # take top-k
         return ind[:k]
