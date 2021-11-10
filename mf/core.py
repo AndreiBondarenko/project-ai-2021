@@ -1,6 +1,7 @@
 import numpy as np
 from tqdm.auto import tqdm
 from mf import fast
+import pickle
 
 
 class MatrixFactorization:
@@ -36,25 +37,25 @@ class MatrixFactorization:
         self.bi = np.zeros(num_items)
         self.b = np.sum(x.data) / x.count_nonzero()
         # Initialize "already recommended"-set
-        self.old_recs = {}
-        for i, j, _ in zip(x.row, x.col, x.data):
-            self.old_recs.setdefault(i, set()).add(j)
+        # self.old_recs = {}
+        # for i, j, _ in zip(x.row, x.col, x.data):
+        #     self.old_recs.setdefault(i, set()).add(j)
 
         _x = np.array(list(zip(x.row, x.col, x.data)))
         _y = np.array(list(zip(y.row, y.col, y.data)))
 
-        train_sse = []
-        test_sse = []
+        train_mse = []
+        test_mse = []
 
         with tqdm(range(self.iterations), leave=leave_pbar) as _it:
             for _ in _it:
                 fast.sgd(_x, self.P, self.Q, self.bu, self.bi, self.b, self.alpha, self.beta)
-                train_error = fast.sse(_x, self.P, self.Q, self.bu, self.bi, self.b)
-                test_error = fast.sse(_y, self.P, self.Q, self.bu, self.bi, self.b)
-                train_sse.append(train_error)
-                test_sse.append(test_error)
+                train_error = fast.mse(_x, self.P, self.Q, self.bu, self.bi, self.b)
+                test_error = fast.mse(_y, self.P, self.Q, self.bu, self.bi, self.b)
+                train_mse.append(train_error)
+                test_mse.append(test_error)
                 _it.set_postfix(test_error=test_error, train_error=train_error)
-        return train_sse, test_sse
+        return train_mse, test_mse
 
     def recommend(self, k: int, user: int):
         scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b)
@@ -65,3 +66,21 @@ class MatrixFactorization:
         ind = np.setdiff1d(ind, consumed)
         # take top-k
         return ind[:k]
+
+    def save(self, path):
+        with open(path, 'wb') as f:
+            pickle.dump(self, f)
+
+    def load(self, path):
+        with open(path, 'rb') as f:
+            m = pickle.load(f)
+            self.K = m.K
+            self.alpha = m.alpha
+            self.beta = m.beta
+            self.iterations = m.iterations
+            self.P = m.P
+            self.Q = m.Q
+            self.bu = m.bu
+            self.bi = m.bi
+            self.b = m.b
+

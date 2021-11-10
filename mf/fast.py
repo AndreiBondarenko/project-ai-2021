@@ -19,13 +19,13 @@ def sgd(x, P, Q, bu, bi, b, alpha, beta):
 
 
 @jit(nopython=True, parallel=True, cache=True)
-def sse(x, P, Q, bu, bi, b):
+def mse(x, P, Q, bu, bi, b):
     error = 0
     for idx in prange(len(x)):
         i, j, v = x[idx]
         abs_error = v - predict_rating(i, j, P, Q, bu, bi, b)
         error += abs_error ** 2
-    return error
+    return error / len(x)
 
 
 @jit(nopython=True, cache=True)
