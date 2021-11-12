@@ -37,9 +37,7 @@ class MatrixFactorization:
         self.bi = np.zeros(num_items)
         self.b = np.sum(x.data) / x.count_nonzero()
         # Initialize "already recommended"-set
-        # self.old_recs = {}
-        # for i, j, _ in zip(x.row, x.col, x.data):
-        #     self.old_recs.setdefault(i, set()).add(j)
+        self.old_recs = x.tocsr()
 
         _x = np.array(list(zip(x.row, x.col, x.data)))
         _y = np.array(list(zip(y.row, y.col, y.data)))
@@ -57,14 +55,30 @@ class MatrixFactorization:
                 _it.set_postfix(test_error=test_error, train_error=train_error)
         return train_mse, test_mse
 
-    def recommend(self, k: int, user: int):
+    def recommend(self, user, k):
         scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b)
         # sort items in descending order by their score
         ind = np.argsort(scores)[::-1]
         # remove consumed items, i.e. items from training set
-        consumed = np.array(self.old_recs[user])
-        ind = np.setdiff1d(ind, consumed)
+        consumed = np.array(self.old_recs.getrow(user).nonzero()[1])
+        ind = np.setdiff1d(ind, consumed, assume_unique=True)
         # take top-k
+        return ind[:k]
+
+    def recommend_sim(self, user, k):
+        # self.old_recs --> scipy.sparse.csr_matrix
+        history = self.old_recs.getrow(user)
+        # get highest rated item in user's history
+        best = history.argmax()
+        # compute similarity scores between highest rated item
+        # and all other items
+        scores = fast.compute_item_similarities(best, self.Q)
+        # sort items based on similarity scores
+        ind = np.argsort(scores)[::-1]
+        # remove already consumed items
+        consumed = np.array(history.nonzero()[1])
+        ind = np.setdiff1d(ind, consumed, assume_unique=True)
+        # return top k
         return ind[:k]
 
     def save(self, path):
@@ -83,4 +97,5 @@ class MatrixFactorization:
             self.bu = m.bu
             self.bi = m.bi
             self.b = m.b
+            self.old_recs = m.old_recs
 
