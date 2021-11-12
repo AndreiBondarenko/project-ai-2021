@@ -1,6 +1,6 @@
 import numpy as np
 from tqdm.auto import tqdm
-from mf import fast
+from recommenders.mf import fast
 import pickle
 
 
