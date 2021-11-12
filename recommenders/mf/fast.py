@@ -1,8 +1,8 @@
 import numpy as np
 from numba import jit, prange
 
-
-@jit(nopython=True, parallel=True, cache=True)
+# Do no paralellize sgd to avoid calculating gradients with stale copies of P and Q
+@jit(nopython=True)
 def sgd(x, P, Q, bu, bi, b, alpha, beta):
     for idx in prange(len(x)):
         i, j, v = x[idx]
@@ -38,19 +38,6 @@ def compute_relevance_scores(i, P, Q, bu, bi, b):
     scores = np.empty(len(Q))
     for j in prange(len(Q)):
         scores[j] = b + bu[i] + bi[j] + np.dot(P[i], Q[j])
-    return scores
-
-
-@jit(nopython=True, parallel=True, cache=True)
-def compute_item_similarities(i, Q):
-    A = Q[i]
-    scores = np.empty(len(Q))
-    for j in prange(len(Q)):
-        B = Q[j]
-        sim = np.dot(A, B)
-        norm_a = np.linalg.norm(A)
-        norm_b = np.linalg.norm(B)
-        scores[j] = sim / norm_a / norm_b
     return scores
 
 
