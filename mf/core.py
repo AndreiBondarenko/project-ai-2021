@@ -3,10 +3,9 @@ from tqdm.auto import tqdm
 from mf import fast
 import pickle
 
-
 class MatrixFactorization:
     """
-    Matrix factorization based collaborative filtering .
+    Matrix factorization based collaborative filtering.
 
     Args:
       K: number of latent dimensions
@@ -26,7 +25,21 @@ class MatrixFactorization:
         self.b = None
         self.old_recs = None
 
+
     def train(self, x, y, leave_pbar=True):
+        """MF train function.
+
+        Args:
+            x (scipy.sparse.coo_matrix): training dataset
+            y (scipy.sparse.coo_matrix): test dataset (sparse coo matrix)
+            leave_pbar (bool): toggle whether to leave progress bar after finished.
+
+
+        Returns:
+            The return value. True for success, False otherwise.
+
+        """
+
         # Compute unique user and items counts
         num_users, num_items = x.shape
         # Initialize latent feature matrices
@@ -55,6 +68,7 @@ class MatrixFactorization:
                 _it.set_postfix(test_error=test_error, train_error=train_error)
         return train_mse, test_mse
 
+
     def recommend(self, user, k):
         scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b)
         # sort items in descending order by their score
@@ -64,6 +78,7 @@ class MatrixFactorization:
         ind = np.setdiff1d(ind, consumed, assume_unique=True)
         # take top-k
         return ind[:k]
+
 
     def recommend_sim(self, user, k):
         # self.old_recs --> scipy.sparse.csr_matrix
@@ -81,9 +96,11 @@ class MatrixFactorization:
         # return top k
         return ind[:k]
 
+ 
     def save(self, path):
         with open(path, 'wb') as f:
             pickle.dump(self, f)
+
 
     def load(self, path):
         with open(path, 'rb') as f:
