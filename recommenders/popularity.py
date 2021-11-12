@@ -12,14 +12,18 @@ class Popularity:
         _x.data = np.ones_like(_x.data)
         _x = _x.tocsc()
 
-        self.scores = np.squeeze(np.asarray(_x.sum(axis=1)))
+        self.scores = np.squeeze(np.asarray(_x.sum(axis=0)))
         self.ranking = np.argsort(self.scores)[::-1]
 
     def recommend(self, user: int, k: int):
         """
         Make a top-k recommendation for user
-        :param user: id of user to make recommendation for
-        :param k: number of items to recommend
-        :return: top-k recommended item id's
+
+        Args:
+            user: id of user to make recommendation for
+            k: number of items to recommend
+
+        Returns:
+            top-k recommended item id's
         """
         return self.ranking[:k]
