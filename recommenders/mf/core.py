@@ -13,10 +13,11 @@ class MatrixFactorization:
       beta: regularization parameter
       iterations: number of SGD iterations to perform
     """
-    def __init__(self, K=100, alpha=0.001, beta=0.02, iterations=1000):
+    def __init__(self, K=100, alpha=0.001, beta=0.02, gamma=0.2, iterations=1000):
         self.K = K
         self.alpha = alpha
         self.beta = beta
+        self.gamma = gamma
         self.iterations = iterations
         self.P = None
         self.Q = None
@@ -24,7 +25,7 @@ class MatrixFactorization:
         self.bi = None
         self.b = None
         self.old_recs = None
-
+        self.popularity_scores = None
 
     def train(self, x, y, leave_pbar=True):
         """MF train function.
@@ -55,6 +56,13 @@ class MatrixFactorization:
         _x = np.array(list(zip(x.row, x.col, x.data)))
         _y = np.array(list(zip(y.row, y.col, y.data)))
 
+        __x = x.copy()
+        __x.data = np.ones_like(__x.data)
+        __x = __x.tocsc()
+        self.popularity_scores = np.squeeze(np.asarray(__x.sum(axis=0)))
+        self.popularity_scores = self.popularity_scores / np.max(self.popularity_scores)
+        del __x
+
         train_mse = []
         test_mse = []
 
@@ -70,7 +78,8 @@ class MatrixFactorization:
 
 
     def recommend(self, user, k):
-        scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b)
+        scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b) / 5
+        scores = np.add((1.0 - self.gamma) * scores, self.gamma * self.popularity_scores)
         # sort items in descending order by their score
         ind = np.argsort(scores)[::-1]
         # remove consumed items, i.e. items from training set
@@ -115,4 +124,5 @@ class MatrixFactorization:
             self.bi = m.bi
             self.b = m.b
             self.old_recs = m.old_recs
+            self.popularity_scores = m.popularity_scores
 

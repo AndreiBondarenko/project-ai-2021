@@ -13,6 +13,7 @@ class Popularity:
         _x = _x.tocsc()
 
         self.scores = np.squeeze(np.asarray(_x.sum(axis=0)))
+        self.scores = self.scores / self.scores.max()
         self.ranking = np.argsort(self.scores)[::-1]
 
     def recommend(self, user: int, k: int):
