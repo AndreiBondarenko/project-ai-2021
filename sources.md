@@ -9,3 +9,4 @@
 - [Evaluating recommender systems](https://cran.r-project.org/web/packages/recometrics/vignettes/Evaluating_recommender_systems.html)
 - [Google - Recommendation - Matrix Factorization](https://developers.google.com/machine-learning/recommendation/collaborative/matrix)
 - [Netflix Update: Try This at Home](https://sifter.org/simon/journal/20061211.html)
+- [10 More lessons learned from building real-life Machine Learning systems — Part I](https://xamat.medium.com/10-more-lessons-learned-from-building-real-life-ml-systems-part-i-b309cafc7b5e)
