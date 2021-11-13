@@ -41,14 +41,10 @@ def compute_relevance_scores(i, P, Q, bu, bi, b):
     return scores
 
 
-@jit(nopython=True, parallel=True, cache=True)
 def compute_item_similarities(i, Q):
-    A = Q[i]
-    scores = np.empty(len(Q))
-    for j in prange(len(Q)):
-        B = Q[j]
-        sim = np.dot(A, B)
-        norm_a = np.linalg.norm(A)
-        norm_b = np.linalg.norm(B)
-        scores[j] = sim / norm_a / norm_b
-    return scores
+    As = Q[i]
+    dot = As @ Q.T
+    norm_a = np.linalg.norm(As, axis=1)
+    norm_b = np.linalg.norm(Q, axis=1)
+    sim = np.divide(np.divide(dot.T, norm_a).T, norm_b)
+    return np.sum(sim, axis=0) / len(i)

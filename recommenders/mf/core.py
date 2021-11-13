@@ -91,16 +91,14 @@ class MatrixFactorization:
 
     def recommend_sim(self, user, k):
         # self.old_recs --> scipy.sparse.csr_matrix
-        history = self.old_recs.getrow(user)
+        history = self.old_recs.getrow(user).toarray().squeeze()
         # get highest rated item in user's history
-        best = history.argmax()
-        # compute similarity scores between highest rated item
-        # and all other items
-        scores = fast.compute_item_similarities(best, self.Q)
+        history_top_k = np.argsort(history)[::-1][:k]
+        scores = fast.compute_item_similarities(history_top_k, self.Q)
         # sort items based on similarity scores
         ind = np.argsort(scores)[::-1]
         # remove already consumed items
-        consumed = np.array(history.nonzero()[1])
+        consumed = np.array(history.nonzero())
         ind = np.setdiff1d(ind, consumed, assume_unique=True)
         # return top k
         return ind[:k]
