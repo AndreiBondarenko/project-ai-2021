@@ -68,7 +68,6 @@ def precision_at_k(topk: np.ndarray, actual: sps.csr_matrix):
 
 def ndcg_at_k(topk: np.ndarray, actual: sps.csr_matrix):
     """
-    TODO: Compare with Geert's implementation in train_and_eval.ipynb
     Compute ndcg@k for given set of recommended items
 
     Args:
