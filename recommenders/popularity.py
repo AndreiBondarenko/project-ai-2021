@@ -6,8 +6,11 @@ class Popularity:
     def __init__(self):
         self.scores = None
         self.ranking = None
+        self.old_recs = None
 
     def train(self, x: sps.coo_matrix):
+        self.old_recs = x.tocsr()
+
         _x = x.copy()
         _x.data = np.ones_like(_x.data)
         _x = _x.tocsc()
@@ -27,4 +30,6 @@ class Popularity:
         Returns:
             top-k recommended item id's
         """
-        return self.ranking[:k]
+        consumed = np.array(self.old_recs.getrow(user).nonzero()[1])
+        ind = np.setdiff1d(self.ranking, consumed, assume_unique=True)
+        return ind[:k]
