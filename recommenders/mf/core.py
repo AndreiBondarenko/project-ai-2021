@@ -77,9 +77,10 @@ class MatrixFactorization:
         return train_mse, test_mse
 
 
-    def recommend(self, user, k):
-        scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b) / 5
-        scores = np.add((1.0 - self.gamma) * scores, self.gamma * self.popularity_scores)
+    def recommend(self, user, k, pop_weighted=True):
+        scores = fast.compute_relevance_scores(user, self.P, self.Q, self.bu, self.bi, self.b) 
+        if pop_weighted:
+            scores = np.add((1.0 - self.gamma) * scores / 5, self.gamma * self.popularity_scores)
         # sort items in descending order by their score
         ind = np.argsort(scores)[::-1]
         # remove consumed items, i.e. items from training set
