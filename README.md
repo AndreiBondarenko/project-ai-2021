@@ -1,33 +1,16 @@
-# project-ai-2021
+# Project AI 2021: Matrix Factorization on Goodreads Dataset
 
-## Evaluatie 16/11/2021
+This is the source code repository for the Matrix Factorization (MF) implementation by Andrei Bondarenko and Geert Goemaere for the Project AI course (2021). We performed experiments on the Goodreads datset provided to us.
 
-Things to do:
+A small overview of the files in this repository:
 
-- Kennis abstract sectie van papers in references van de Matrix\_Factorization paper.
-- Netflix prize:
-  - Wat is deze competitie?
-  - Wie heeft de competitie gewonnen en met welke methode?
-  - Netflix rating niet zo effectief in praktijk? Wat zegt literatuur, alternatieven?
-- SGD:
-  - Wat is het?
-  - Verschillende alternatieven en/of optimizers
-- Verschil SGD en ALS uitleggen
-- Details paper goed kennen
-- Colaborative filtering: verschil neighborhood methods versus latent factor models
-- Paper: Kennis van de context, voorgaand en volgend werk
+- data: contains intermediate data files
+- recommenders: contains the implementations of both the baseline popularity recommender, as well as the MF based recommender.
+- sources.md: contains (some) of the sources we referenced
+- utils.py: utility functions for notebook experiments
+- preprocessing.ipynb: preprocessing of the Goodreads dataset
+- baseline.ipynb: quantitative evaluation of the baseline popularity recommender
+- mf_grid_search_\*.ipynb: grid search experiment for various MF recommender hyper-parameters
+- mf_qual_eval.ipynb: qualitative evaluation experiment for MF recommender
+- mf_quant_eval.ipynb: quantitative evaluation experiment for MF recommender
 
-~~recall@K:~~ precision@K: --> the computation we describe here is actually for P@K!
-- per user, predict score for all items
-- per user, sort descending items based on score and keep K items with highest score
-- ~~recall@K~~ P@K per user: (number of relevant items of top-K list found in future list) / K
-- average ~~recall@K~~P@K = mean(~~recall~~P@K of all users)
-
-recall@K:
-- per user, predict score for all items
-- per user, sort descending items based on score and keep K items with highest score
-- recall@K per user: (number of relevant items of top-K list found in future list) / **(total number of relevant items, i.e. items in future list)**
-- average recall@K = mean(recall of all users)
-
-NDCG@k:
-- recall@K but relevant item weighted based on position in top-K list
