@@ -14,3 +14,23 @@ A small overview of the files in this repository:
 - mf_qual_eval.ipynb: qualitative evaluation experiment for MF recommender
 - mf_quant_eval.ipynb: quantitative evaluation experiment for MF recommender
 
+## Agreed pre-processing, training and evaluation in optimization phase for the goodreads teams
+
+### preprocessing
+
+- min. sup. users = 5
+- min sup items = 1 (should be the case in dataset already, check to be sure)
+- keep all the ratings and scores
+
+### training
+
+- For validation we consider doing 5 random 80%/20% train-test splits.
+- For each train-test pair, we first perform hyperparameter optimisation on the train part (via cross-validation) and then evaluate on the test part.
+- This gives us 5x(recall@10, ndcg@10) for which we compute the mean and stdev.
+- --> for the 5 random splits we should all use the same seeds
+
+### evaluation
+
+- recall k = 5, 10
+- NDCG = 5, 10
+
