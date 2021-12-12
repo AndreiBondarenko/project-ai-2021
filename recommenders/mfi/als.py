@@ -31,7 +31,6 @@ def build_lin_equation(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, 
         confidence = nz_vals[_i]
         factor = Y[i]
 
-        # need to make change here I think wrt. preferences
         if confidence > 0:
             b += confidence * factor
         else:
