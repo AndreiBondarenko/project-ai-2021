@@ -41,7 +41,8 @@ def build_lin_equation(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, 
 
 
 @njit(parallel=True)
-def least_squares(Cui_rows, Cui_cols, Cui_vals, X, Y, regularization):
+def least_squares(Cui_rows: np.ndarray, Cui_cols: np.ndarray, Cui_vals: np.ndarray,
+                  X: np.ndarray, Y: np.ndarray, regularization: float):
     """
     Perform least squares optimization.
     Fix Y, optimize X.
