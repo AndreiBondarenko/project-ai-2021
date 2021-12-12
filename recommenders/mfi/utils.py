@@ -10,7 +10,7 @@ def build_conf_mat(x: sps.coo_matrix, alpha=40):
         if r == 0:
             return 1
         elif r < 2.5:
-            return alpha * (5-r)
+            return - alpha * (5-r)
         else:
             return alpha * r
     # Sparse representation! Doesn't contain 1 values
