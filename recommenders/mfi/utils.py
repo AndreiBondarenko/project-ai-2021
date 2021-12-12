@@ -1,6 +1,7 @@
 import numpy as np
 import scipy.sparse as sps
 from typing import Callable
+from numba import njit
 
 
 def build_conf_mat(x: sps.coo_matrix, alpha=40):
@@ -43,3 +44,10 @@ def sparse_apply_elementwise(x: sps.coo_matrix, f: Callable):
     _x.col = np.delete(_x.col, zeros)
     _x.data = np.delete(_x.data, zeros)
     return _x
+
+@njit
+def is_sorted(a: np.ndarray):
+    for i in range(a.size-1):
+        if a[i+1] < a[i] :
+            return False
+    return True
