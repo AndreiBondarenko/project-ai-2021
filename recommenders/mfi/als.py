@@ -20,7 +20,7 @@ def nonzeros(u: int, rows: np.ndarray, cols: np.ndarray, vals: np.ndarray):
 @njit
 def build_lin_equation(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, n_factors):
     """
-    Builds matrices representing linear equations to solve for ALS.
+    Builds matrices representing linear equations to solve for least squares optimization.
     """
     A = YtY + regularization * np.eye(n_factors)
     b = np.zeros(n_factors)
@@ -41,21 +41,20 @@ def build_lin_equation(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, 
     return A, b
 
 
-@njit
-def user_factor(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, n_factors):
-    # Xu = (YtCuY + regularization * I)^-1 (YtCuPu)
-    A, b = build_lin_equation(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, n_factors)
-    return np.linalg.solve(A, b)
-
-
 @njit(parallel=True)
 def least_squares(Cui_rows, Cui_cols, Cui_vals, X, Y, regularization):
+    """
+    Perform least squares optimization.
+    Fix Y, optimize X.
+    """
     
     users, n_factors = X.shape
     YtY = Y.T.dot(Y)
 
     for u in prange(users):
-        X[u] = user_factor(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, n_factors)
+        A, b = build_lin_equation(Y, YtY, u, Cui_rows, Cui_cols, Cui_vals, regularization, n_factors)
+        X[u] = np.linalg.solve(A, b)
+
 
 if __name__ == '__main__':
     import scipy.sparse as sps
@@ -84,7 +83,7 @@ if __name__ == '__main__':
     assert utils.is_sorted(Pui_sparse.row)
 
     logger.debug('Initializing recommender internals.')
-    K = 10
+    K = 50
     user_factors = np.random.normal(scale=1./K, size=(n_users, K))
     item_factors = np.random.normal(scale=1./K, size=(n_items, K))
 
