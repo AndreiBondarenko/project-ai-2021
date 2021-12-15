@@ -1,1 +1,1 @@
-from recommenders.mf.core import MatrixFactorization
+from recommenders.mfi.core import MatrixFactorizationImplicit
