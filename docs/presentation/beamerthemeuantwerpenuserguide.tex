@@ -1,0 +1,849 @@
+%%
+%% This is file `beamerthemeuantwerpenuserguide.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% uantwerpendocs.dtx  (with options: `bmrug')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2013-2021  by Walter Daems <walter.daems@uantwerpen.be>
+%% 
+%% This work may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Walter Daems.
+%% 
+
+
+\documentclass[aspectratio=1610]{beamer}
+\usetheme[we]{uantwerpen}
+\usepackage[english]{babel}
+
+\usepackage{metalogo}
+\usepackage{kantlipsum}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+
+\newcommand*\command[1]{{\tt \textbackslash #1}}
+\NewEnviron{codesnippet}[1][0.8\textwidth]{
+  \scriptsize
+  \qquad\framebox[#1][l]{\texttt{
+      \setlength\textwidth{#1}
+      \begin{minipage}{0.9\textwidth}
+        \BODY
+      \end{minipage}
+    }
+  }
+}
+\newcommand*\ind[1][2ex]{\hspace*{#1}}
+\newcommand*\bframe[1][]{\command{begin}\{#1frame\}}
+\newcommand*\eframe[1][]{\command{end}\{#1frame\}}
+
+\title{This is your \texttt{\textbackslash{}title{}}}
+\subtitle[my short title]{This is your \texttt{\textbackslash{}subtitle{}}}
+\date[my short date]{This is your \texttt{\textbackslash{}date{}}}
+\author[my short author]{This is your \texttt{\textbackslash{}author{}}}
+
+\begin{document}
+
+\begin{frame}[negativefill]
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}[negative]
+  \maketitle
+\end{frame}
+
+\begin{frame}
+  {What's on the menu?}
+  {Bon app\'etit!}
+  ~\\
+  \tableofcontents
+\end{frame}
+
+\section{Loading the theme and theme options}
+
+\begin{frame}[negative]
+  \sectionpage
+\end{frame}
+
+\begin{frame}
+  {Using our beamer theme}
+
+  The \texttt{uantwerpen} beamer theme is distributed by CTAN. It
+  should be installed with your \TeX{} distribution by default.
+
+  You can load the package in your preamble as:
+
+  \begin{codesnippet}
+    \command{documentclass}[aspectratio=1610]\{beamer\}\\
+    \command{usetheme}[theme-options-go-here]\{uantwerpen\}\\
+    \command{usepackage}[english]\{babel\}
+  \end{codesnippet}
+
+  \heading{Remarks}
+  \begin{itemize}
+  \item The theme behaves well for all supported beamer aspect
+    ratios.
+  \item $16\times 10$ is currently your best option to maximize your
+    slide size given a modern LCD-projector!
+  \item Only \texttt{dutch} and \texttt{english} are supported.
+    The correct logoware is selected using the babel language option!
+  \end{itemize}
+\end{frame}
+
+\begin{l3qframe}[t,rqgraphic={
+    \begin{minipage}{0.35\textwidth}
+      \footnotesize
+      \begin{center}
+        \begin{tabular}{c}
+          \toprule
+          \bfseries option\\
+          \midrule
+          \tt be  \\
+          \tt fbd \\
+          \tt ggw \\
+          \tt lw  \\
+          \tt ow  \\
+          \tt re  \\
+          \tt sw  \\
+          \tt ti  \\
+          \tt we  \\
+          \tt iob \\
+          \bottomrule
+        \end{tabular}
+      \end{center}
+    \end{minipage}
+  }]
+  {Theme options}{}
+  The following theme options may come in handy:
+  \begin{description}
+  \item[\tt X] to invoke your own faculty's colors and logos,
+    with X one of the options in the table on the right\\
+    (I assume you know your faculty abbreviation)
+  \item[\tt nofonts] disables font loading, so you can load your own fonts
+  \item[\tt rgb]  to select RGB color encoding (best for projecting, default)
+  \item[\tt cmyk] to select CMYK color encoding  (best for printing)
+  \item[\tt neutralcolors] to disable your faculty colors and use the
+    standard UAntwerpen colors
+  \end{description}
+  \medskip
+
+  The defaults of the theme are:
+  \begin{itemize}
+  \item no faculty option  ($\Rightarrow$ standard UAntwerpen logos)
+  \item \texttt{rgb}
+  \end{itemize}
+
+\end{l3qframe}
+
+\begin{frame}[t]
+  {A note on the compiler you are using}
+  {Fonts galore}
+
+  Depending on the type of compiler you use, a different font scheme
+  is loaded:
+  \begin{description}
+  \item[\LaTeX] --- ancient compiler - no support\\
+    Don't use!
+  \item[pdf\LaTeX] --- very old school compiler - no OTF/TTF support\\
+    Computer Modern Sans Serif is used as font
+  \item[\XeLaTeX] --- old school compiler - the first to have OTF/TTF
+    support\\
+    Calibri is used as font (with cmbright math fonts)
+  \item[\LuaLaTeX] --- current compiler - your best option\\
+    Calibri is used as font (with cmbright math fonts)
+  \end{description}
+
+\end{frame}
+
+\section{Title slides}
+
+\begin{frame}[negative]
+  \sectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Title slides}
+  \heading{Contents} ---
+  The contents of the title slide can be set in your preamble
+  using the classical \LaTeX{} commands:
+  \begin{itemize}
+  \item \command{title\{\}}
+  \item \command{subtitle}\{\}
+  \item \command{author\{\}}
+  \item \command{date\{\}}
+  \end{itemize}
+  We don't specify an institute, as the logos do so.
+
+  \heading{Code} --- The titleslide is easily typeset as:\\
+  \begin{codesnippet}
+    \bframe[][option]\\
+    \ind\command{maketitle}\\
+    \eframe
+  \end{codesnippet}
+
+  with no option, or one of: \texttt{normal}, \texttt{negative},
+  \texttt{negativefill}.
+\end{frame}
+
+\section{Regular slides}
+
+\subsection{Bare}
+
+\begin{frame}[negative]
+  \sectionpage
+\end{frame}
+
+\begin{frame}[negative]
+  \subsectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Frame titles}
+  {And subtitles}
+  \heading{How to specify them!}\\
+  Titles are specified using \command{frametitle\{\}} or
+  \command{framesubtitle\{\}} or even easier as first and second argument
+  to the \texttt{frame} environment (or their derived versions).
+
+  \begin{codesnippet}
+    \bframe[][options go here, comma separated]\\
+    \ind\{first argument\}\\
+    \ind\{second argument\}\\
+    \ind frame contents \\
+    \eframe
+  \end{codesnippet}
+  \bigskip
+
+  \heading{Don't need them?}\\
+  If you need a slide without titles: just don't specify them!
+
+  \heading{Want to get rid of the footer as well?}\\
+  Specify the \texttt{plain} option to the frame.
+
+\end{frame}
+
+\begin{frame}[t]
+  {The canvas}
+
+  \heading{Flavors} --- The canvas of the slide has four flavors:
+  \begin{description}
+  \item[normal]
+    the ordinary white background slide
+  \item[negativefill]
+    a reverse video slide on a background (in maincolor) without white
+    margins
+  \item[negative]
+    a reverse video slide on a bakcground (in maincolor) with white
+    margins
+  \item[graphicfill]
+    a graphic canvas without white margins (graphic can be photo,
+    graph, \ldots)
+  \item[graphic] a graphic canvas with white margins (graphic can be
+    anything)
+  \end{description}
+  They are specified as options to the frame environment (or its
+  derivatives).
+
+  \heading{Remarks}
+  \begin{itemize}
+  \item You don't need to specify the normal canvas, it is the
+    default.
+  \item In handout mode the negative and negativefill canvas will be
+    typeset as normal canvas (to allow for easy printing).
+  \item The graphic option has many variants that we will discuss later.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[negativefill]
+  {A negativefill slide}
+  {with a subtle subtitle}
+  \kant[1]
+\end{frame}
+
+\begin{frame}[negative,t]
+  {A negative slide}
+  {with a subtle subtitle}
+  Don't do this! Don't use a title and subtitle, nor straight text
+  but put material on this slide that does not touch or cross the
+  edges of the background!\\
+  E.g., the graph on the bottom right
+  \place[anchor=south east] at (0.9,0.1) {
+    \begin{tikzpicture}[white]
+      \begin{axis}
+        [width=4cm,height=5cm,grid=both,font=\footnotesize]
+        \addplot[white] {x^2};
+      \end{axis}
+    \end{tikzpicture}
+  }
+  The best advice is not to reserve this canvas for title frames and
+  intermission slides.
+\end{frame}
+
+\begin{frame}[t]
+  {Vertical alignment}
+
+  You can easily specify the vertical alignment of your frame
+  contents, using the options
+  \begin{description}
+  \item[\texttt{t}] for top
+  \item[\texttt{c}] for center
+  \item[\texttt{b}] for bottom
+  \end{description}
+
+  Example:\\[1ex]
+  \begin{codesnippet}
+    \bframe[][t]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe
+  \end{codesnippet}
+
+\end{frame}
+
+\begin{frame}[t]
+  {Colors}
+  {What a wonderful world}
+
+  \heading{Standard colors}\\
+  You can select the theme colors using:\\
+  \textcolor{maincolor}{Main color}:
+  can be specified as \LaTeX-color \emph{maincolor}\\
+  \textcolor{sidecolor}{Side color}:
+  can be specified as \LaTeX-color \emph{sidecolor}\\
+  \textcolor{basecolor}{Base color}:
+  can be specified as \LaTeX-color
+  \emph{basecolor}
+
+  \heading{Advice}\\
+  \begin{itemize}
+  \item Stick to the standard colors or use grayscale tints!
+  \item Only use color when functional (e.g. in graphs)
+  \end{itemize}
+
+  \heading{Alert}
+  You can use \alert{\command{alert{}}} to grab the attention of the
+  user. It will typeset your content in \alert{red}.
+
+  \heading{Not taking any advice?}\\
+  You can fiddle with the colors, but do so in smart way.
+  Use \command{setbeamercolor}. You can see how it is used in the
+  \texttt{beamercolorthemeuantwerpen.sty} file.
+\end{frame}
+
+\begin{frame}[t]
+  {Logo demo}
+
+  The logo's can be used as follows (but you should not need them):
+  \begin{itemize}
+  \item \command{includegraphics[width=3cm]\{\command{logopos}\}}\\
+    \begin{center}
+      \begin{tikzpicture}
+        \draw[fill,white] (0,0) rectangle node
+        {\includegraphics[width=3cm]{\logopos}} (4,1.25);
+      \end{tikzpicture}
+    \end{center}
+  \item \command{includegraphics[width=3cm]\{\command{logoneg}\}}\\
+    \begin{center}
+      \begin{tikzpicture}
+        \draw[fill] (0,0) rectangle node
+        {\includegraphics[width=3cm]{\logoneg}} (4,1.25);
+      \end{tikzpicture}
+    \end{center}
+  \item \command{includegraphics[width=3cm]\{\command{logomonowhite}\}}\\
+    \begin{center}
+      \begin{tikzpicture}
+        \draw[fill] (0,0) rectangle node
+        {\includegraphics[width=3cm]{\logomonowhite}} (4,1.25);
+      \end{tikzpicture}
+    \end{center}
+  \end{itemize}
+\end{frame}
+
+\subsection{With graphic eye candy}
+
+\begin{frame}[negative]
+  \subsectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Basic idea}
+
+  \heading{The idea} --- put support material (photo or graph) on the
+  slide next to the frame content.
+  This is done by
+  \begin{itemize}
+  \item specifying an appropriate canvas
+  \item using an appropriate frame derivative
+  \end{itemize}
+
+  \heading{Good combinations}
+  \begin{center}\small
+    \begin{tabular}{ccc}
+      \toprule
+      \bfseries frame option & \bfseries graphic on frame
+      & \bfseries corresponding frame derivative\\
+      \midrule
+      lqgraphic & left quarter   & r3qframe \\
+      rqgraphic & right quarter & l3qframe \\
+      lhgraphic & left half      & rhframe \\
+      rhgraphic & right half    & lhframe \\
+      thgraphic & top half       & bhframe \\
+      bhgraphic & bottom half   & thframe\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+\end{frame}
+
+\begin{l3qframe}[rqgraphic]
+  {Some Random Title}
+  {Please, adapt!}
+
+  \small
+  The slide has been typeset as:\\
+  \begin{codesnippet}[\textwidth]
+    \bframe[l3q][rqgraphic=\{<load photo here>\}]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe[l3q]
+  \end{codesnippet}
+  \smallskip
+
+  \subheading{Remarks}
+  \begin{itemize}
+  \item Load photo as:\\
+    \command{includegraphics[width=0.25\command{paperwidth}, min height=\command{textheight}]
+      \{image.jpg\}}
+  \item If \texttt{rqgraphic} is specified without argument, a standard photo
+    is loaded.
+  \item Note: you can avoid rounding the corner using the
+    frame option \texttt{noround} (may be useful when not using a photo)
+  \end{itemize}
+\end{l3qframe}
+
+\begin{r3qframe}[lqgraphic,t]
+  {Some Random Title}
+  {Please, adapt!}
+
+  \small
+  The slide has been typeset as:\\
+  \begin{codesnippet}[\textwidth]
+    \bframe[r3q][lqgraphic=\{<load photo here>\}]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe[r3q]
+  \end{codesnippet}
+  \smallskip
+
+  \subheading{Remarks}
+  \begin{itemize}
+  \item   Load photo as:\\
+    \command{includegraphics[width=0.25\command{paperwidth}, min height=\command{textheight}]
+      \{image.jpg\}}
+  \item If \texttt{rqgraphic} is specified without argument, a standard photo
+    is loaded.
+  \item Note: you can avoid rounding the corner using the
+    frame option \texttt{noround} (may be useful when not using a photo)
+  \end{itemize}
+\end{r3qframe}
+
+\begin{lhframe}[rhgraphic]
+  {Some Random Title}
+
+  \small
+  The slide has been typeset as:\\
+  \begin{codesnippet}[\textwidth]
+    \bframe[lh][rhgraphic=\{<load photo here>\}]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe[lh]
+  \end{codesnippet}
+  \smallskip
+
+  \subheading{Remarks}
+  \begin{itemize}
+  \item   Load photo as:\\
+    \command{includegraphics[min
+      width=0.5\command{paperwidth}, min height=\command{textheight}]
+      \{image.jpg\}}
+  \item If \texttt{rqgraphic} is specified without argument, a standard photo
+    is loaded.
+  \item Note: avoid rounding the corner using \texttt{noround}
+  \end{itemize}
+\end{lhframe}
+
+\begin{rhframe}[lhgraphic,t]
+  {Some Random Title}
+
+  \small
+  The slide has been typeset as:\\
+  \begin{codesnippet}[\textwidth]
+    \bframe[rh][lhgraphic=\{<load photo here>\}]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe[rh]
+  \end{codesnippet}
+  \smallskip
+
+  \subheading{Remarks}
+  \begin{itemize}
+  \item   Load photo as:\\
+    \command{includegraphics[min
+      width=0.5\command{paperwidth}, min height=\command{textheight}]
+      \{image.jpg\}}
+  \item If \texttt{rqgraphic} is specified without argument, a standard photo
+    is loaded.
+  \item Note: avoid rounding the corner using \texttt{noround}
+  \end{itemize}
+\end{rhframe}
+
+\begin{bhframe}[thgraphic,t]
+  {Some Random Title}{Please, adapt!}
+  \small
+  The slide has been typeset as:
+  \begin{codesnippet}[\textwidth]
+    \bframe[bh][thgraphic=\{<load photo here>\}]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe[bh]
+  \end{codesnippet}
+\end{bhframe}
+
+\begin{thframe}[bhgraphic,t]
+  {Some Random Title}
+  {Please, adapt!}
+  \small
+  The slide has been typeset as:
+  \begin{codesnippet}[\textwidth]
+    \bframe[th][bhgraphic=\{<load photo here>\}]\\
+    \ind\{Title\}\\
+    \ind\{Subtitle\}\\
+    \ind frame contents\\
+    \eframe[th]
+  \end{codesnippet}
+\end{thframe}
+
+\section{Intermission slides}
+
+\begin{frame}[negative]
+  \sectionpage
+\end{frame}
+
+\subsection{Standard section slides}
+
+\begin{frame}[negative]
+  \subsectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Basic idea}
+
+  You can select any of the canvas templates: negative, negativefill,
+  graphic, graphicfill and normal, and combine it with:
+  \begin{description}
+  \item[\command{sectionpage}]
+  \item[\command{subsectionpage}]
+  \end{description}
+
+  Example:\\[1ex]
+  \begin{codesnippet}[0.8\textwidth]
+    \bframe[][negative]\\
+    \ind \command{sectionpage}\\
+    \eframe\\~\\
+    \bframe[][negative]\\
+    \ind \command{subsectionpage}\\
+    \eframe
+  \end{codesnippet}\\[1ex]
+  (this how the previous two slide were generated)
+\end{frame}
+
+\subsection{Custom intermission slides}
+
+\begin{frame}[negative]
+  \subsectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Basic idea}
+
+  If you are a fan of graphic material in slideware, you can use a
+  \texttt{graphic} or \texttt{graphicfill} canvas in combination with
+  small snippets you put on the slide using\\[1ex]
+  \qquad\command{place[node options] at (x,y) \{<material>\}}\\[1ex]
+  with
+  \begin{itemize}
+  \item $(x,y)=(0,0)$ the bottom left of the slide and $(1,1)$ the top
+    right of the slide
+  \item \texttt{node options} any options you want to hand over to the
+    tikz node that is used to position the material.
+  \end{itemize}
+  \medskip
+
+  E.g., the next slide was created using:\\[1ex]
+  \begin{codesnippet}[0.8\textwidth]
+    \bframe[][graphic,t]\\
+    \ind\command{place} at (0.5,0.5) \{\command{uantwerpenicon[scale=0.8]}\}\\
+    \eframe
+  \end{codesnippet}
+  \medskip
+
+  You will have to run \LaTeX{} twice in order for the position to be correct!
+\end{frame}
+
+\begin{frame}[graphic,t]
+  \place at (0.5,0.5) {\uantwerpenicon[scale=0.8]}
+\end{frame}
+
+\begin{frame}[t]
+  {Shading photographs}
+
+  Often you need make a photograph a little bit more opaque in order
+  for the (white) text to readable.
+
+  To this end you can use the following command\\[1ex]
+  \qquad\command{darken[s]\{<material>\}}\\[1ex]
+  with $s$ a value between 0 and 1 to specify the level of darkening.
+
+  E.g., the next slide was created using:
+  \begin{codesnippet}[0.9\textwidth]
+    \bframe[][graphicfill=\{\command{darken}%
+    [0.25]\{\command{includegraphics}%
+    [scale=0.1,min width=\command{paperwidth},min height=\command{paperheight}]%
+    \{Images/uantwerpen-09.jpg\}\},t]\\
+    \command{place} [anchor=north east] at (0.95,0.5) \{\\
+    \ind\command{uantwerpencallout}\{3\}\{2.5\}\{\\
+    \ind\ind\command{bfseries} You cannot be serious!\textbackslash\textbackslash[1ex]\\
+    \ind\ind John McEnroe\}\\
+    \}\\
+    \eframe
+  \end{codesnippet}
+\end{frame}
+
+\begin{frame}[graphicfill={\darken[0.25]%
+    {\includegraphics[scale=0.1,min width=\paperwidth,min height=\paperheight]%
+      {Images/uantwerpen-09.jpg}}},t]
+  \place [anchor=north east] at (0.95,0.5) {
+    \uantwerpencallout{3}{2.5}{
+      \bfseries You cannot be serious!\\[1ex]
+      John McEnroe}
+  }
+\end{frame}
+
+\begin{frame}[t]
+  {Shading photographs locally}
+
+  You can also choose to shade the local backdrop of the material
+  you put on the side. If you like the \command{uantwerpencallout}
+  command of the previous slide, you can give it an optional argument
+  to set the fill opacity of the backdrop behind the text.
+
+  E.g., the next slide was created using:
+  \begin{codesnippet}[0.9\textwidth]
+    \bframe[][graphic,t]\\
+    \ind\command{place} [anchor=north west] at (0.1,0.9) \{\\
+    \ind\ind\command{uantwerpencallout}[fill opacity=0.5]\{4.5\}\{2.5\}\{\\
+    \ind\ind\ind\command{bfseries} I'll be back!\textbackslash\textbackslash[1ex]\\
+    \ind\ind\ind Arnold Schwarzenegger\}\\
+    \}
+    \eframe
+  \end{codesnippet}
+  \medskip
+
+  The \command{uantwerpencallout} command has te following syntax:\\[1ex]
+  \qquad\command{uantwerpencallout[options]\{width\}\{height\}\{contents\}}
+  \medskip
+
+  Remember to run \LaTeX{} twice in order for the position of the
+  callout to be correct!
+\end{frame}
+
+\begin{frame}[graphic,t]
+  \place [anchor=north west] at (0.1,0.9) {
+    \uantwerpencallout[fill opacity=0.5]{4.5}{2.5}{
+      \bfseries I'll be back!\\[1ex]
+      Arnold Schwarzenegger}
+  }
+\end{frame}
+
+\section{Demo of some inner theme parts}
+
+\begin{frame}[negative]
+  \sectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Headings}
+  {on two levels}
+  You can set headings on two levels, by using
+  \begin{itemize}
+  \item\command{heading\{\}}
+  \item\command{subheading\{\}}
+  \end{itemize}
+  \heading{Main subject}~\\
+  blabla
+  \subheading{Subtopic 1}~\\
+  blabla
+  \subheading{Subtopic 2}~\\
+  blabla
+  \heading{Next main subject}~\\
+  blabla
+\end{frame}
+
+\newcommand\listdemo[1][itemize]{
+  \begin{#1}
+  \item First level
+    \begin{#1}
+    \item Second level
+      \begin{#1}
+      \item Third level
+      \end{#1}
+    \end{#1}
+  \end{#1}
+}
+
+\begin{frame}[t]
+  {Itemize / enumerations}
+  {Different styles}
+  Usage:\\
+  Set them (in your preamble) using: \command{setbeamertemplate\{itemize items\}[triangle]}\\
+  The default of the uantwerpen beamer template is set to \texttt{square} to be
+  similar to our logo.
+  \medskip
+
+  \begin{columns}
+    \column[T]{0.3\textwidth}
+    \alert{default}
+    \setbeamertemplate{itemize items}[default]
+    \listdemo
+    \column[T]{0.3\textwidth}
+    \alert{triangle}
+    \setbeamertemplate{itemize items}[triangle]
+    \listdemo
+    \column[T]{0.3\textwidth}
+    \alert{circle}
+    \setbeamertemplate{itemize items}[circle]
+    \listdemo
+  \end{columns}~\\
+  \bigskip
+
+  \begin{columns}
+    \column[T]{0.3\textwidth}
+    \alert{ball}
+    \setbeamertemplate{itemize items}[ball]
+    \listdemo
+    \column[T]{0.3\textwidth}
+    \alert{square}
+    \setbeamertemplate{itemize items}[square]
+    \listdemo
+    \column[T]{0.3\textwidth}
+    \alert{enumeration}
+    \setbeamertemplate{itemize items}[circle]
+    \listdemo[enumerate]
+  \end{columns}
+\end{frame}
+
+\begin{frame}[t]
+  {Block material}
+  {Nothing special}
+
+  \vfill
+  \begin{block}{This is a block}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac
+    arcu est, vel posuere velit. In congue erat vel lorem ornare pretium.
+  \end{block}
+  \vfill
+  \begin{exampleblock}{This is an example block}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac
+    arcu est, vel posuere velit. In congue erat vel lorem ornare pretium.
+  \end{exampleblock}
+  \vfill
+  \begin{alertblock}{This is an alert block}
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac
+    arcu est, vel posuere velit. In congue erat vel lorem ornare pretium.
+  \end{alertblock}
+  \vfill
+\end{frame}
+\section{Advanced material}
+
+\begin{frame}[negative]
+  \sectionpage
+\end{frame}
+
+\begin{frame}[t]
+  {Customizing the template}
+
+  If you want to override logos/colors to create a template for your
+  own research group or department:
+  renew the commands below. The redefinitions must be put just after
+  the \command{begin\{document\}} statement.\\
+  The construction below allows you to put the stuff in a style file
+  that you must load after (!) the \command{usetheme} command.\\[1ex]
+  \begin{codesnippet}[0.95\textwidth]
+    \command{AtBeginDocument\{}\\
+    \ind\command{renewcommand*}\command{logopos\{your-pos-logo-filename-here\}}\\
+    \ind\command{renewcommand*}\command{logoneg\{your-negative-logo-filename-here\}}\\
+    \ind\command{renewcommand*}\command{logomonowhite\{your-mono-logo-filename-here\}}\\
+    \ind\command{renewcommand*}\command{iconfile\{your-icon-filename-here\}}\\
+    \ind\command{colorlet\{maincolor\}\{your-favorite-color\}}\\
+    \ind\command{colorlet\{sidecolor\}\{your-secondfavorite-color\}}\\
+    \ind\command{colorlet\{basecolor\}\{some-solid-color\}}\\
+    \}
+  \end{codesnippet}~\\[1ex]
+\end{frame}
+
+\begin{frame}
+  {Some genuine advice}
+  \small
+
+  Dear user,
+
+  Candy slides are nice for PR, but bad for conveying a message.
+
+  Beamer is a tool to typeset technical presentations. Need more
+  animation and eye candy? Use other tools. They are much easier in
+  ruining your audiences' day.
+
+  Effective slides are simple slides.\\
+  Go by cognitive consonance, flirt with cognitive dissonance, but
+  stay away from cognitive cacophony.
+  This presentation is i.m.ho. a bad one, as it shows the
+  cacophony of possibilities. But hey, you were the one asking for it.
+
+  A lot of effort has gone into this template. I hope you like it.
+  If you have good suggestions, e-mail me. If you have questions, I
+  might even help you.
+
+  Cheers!
+
+  Walter Daems\\
+  (March 2021)
+
+\end{frame}
+
+\end{document}
+\endinput
+%%
+%% End of file `beamerthemeuantwerpenuserguide.tex'.
