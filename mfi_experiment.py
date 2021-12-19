@@ -3,6 +3,7 @@ import scipy.sparse as sps
 import argparse
 import pickle
 import os
+import sys
 
 from recommenders.mfi import MatrixFactorizationImplicit
 from recommenders.mfi import utils as mfi_utils
@@ -24,6 +25,7 @@ if __name__ == '__main__':
         os.mkdir(f'./out/{args.dir}')
     except FileExistsError:
         print('Experiment with given name already exists, delete it or pick another name.')
+        sys.exit()
 
     # init train-test folds and recommenders to be trained
     train_sets = [sps.load_npz(f'./data/train{i}.npz') for i in range(1, 6)]
